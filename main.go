@@ -8,6 +8,9 @@ import (
 
 func main() {
 	f, _ := os.OpenFile("test.txt", os.O_RDWR|os.O_CREATE, 0666)
-	log.NewStore(f)
+	_, err := log.NewStore(f)
+	if err != nil {
+		panic(err)
+	}
 
 }

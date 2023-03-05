@@ -8,9 +8,11 @@ import (
 )
 
 var (
+	// encoding that we persist record sizes and index entries in
 	enc = binary.BigEndian
 )
 
+// number of bytes used to store the records length
 const lenWidth = 8
 
 type store struct {
@@ -20,7 +22,7 @@ type store struct {
 	size uint64
 }
 
-func newStore(f *os.File) (*store, error) {
+func NewStore(f *os.File) (*store, error) {
 	fi, err := f.Stat()
 	if err != nil {
 		return nil, err
@@ -44,6 +46,7 @@ func (s *store) Append(data []byte) (n uint64, pos uint64, err error) {
 		return 0, pos, err
 	}
 	w, err := s.buf.Write(data)
+
 	if err != nil {
 		return 0, pos, err
 	}
